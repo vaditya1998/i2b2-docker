@@ -18,8 +18,9 @@ export i2b2_core_server_branch="${1:-master}"
 export i2b2_data_branch="${2:-master}"
 
 core_server_image="${docker_username}/${docker_reponame}:i2b2-core-server_${i2b2_core_server_branch}"
-oracle_image="${docker_username}/${docker_reponame}:i2b2-data-oracle_${i2b2_data_branch}"
-
+if [ "$HAS_SECRETS" = "true" ]; then
+    oracle_image="${docker_username}/${docker_reponame}:i2b2-data-oracle_${i2b2_data_branch}"
+fi
 echo "=========================================="
 echo " Setting up Docker images"
 echo " Core Server: $core_server_image"

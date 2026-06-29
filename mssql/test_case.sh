@@ -28,7 +28,9 @@ echo "=========================================="
 
 #updating docker image tag
 sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
-sed -i "s|i2b2/i2b2-data-mssql:\${I2B2_DATA_MSSQL_TAG}|${mssql_image}|g" docker-compose.yml
+if [ "$HAS_SECRETS" = "true" ]; then
+    sed -i "s|i2b2/i2b2-data-mssql:\${I2B2_DATA_MSSQL_TAG}|${mssql_image}|g" docker-compose.yml
+fi
 
 echo "Starting containers..."
 docker compose up -d 

@@ -7,7 +7,9 @@ pgsql_image=$docker_username/$docker_reponame:i2b2-data-pgsql_$i2b2_data_branch
 #updating docker image tag
 # sed -i "s|i2b2/i2b2-webclient:\${I2B2_WEBCLIENT_TAG}|$docker_username/$docker_reponame:i2b2-webclient_latest|g" docker-compose.yml
 sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|$core_server_image|g" docker-compose.yml
-sed -i "s|i2b2/i2b2-data-pgsql:\${I2B2_DATA_PGSQL_TAG}|$pgsql_image|g" docker-compose.yml
+if [ "$HAS_SECRETS" = "true" ]; then
+    sed -i "s|i2b2/i2b2-data-pgsql:\${I2B2_DATA_PGSQL_TAG}|$pgsql_image|g" docker-compose.yml
+fi
 
 #removing old test containers 
 #docker rm -f $(docker ps -a -q)
