@@ -18,9 +18,8 @@ export i2b2_core_server_branch="${1:-master}"
 export i2b2_data_branch="${2:-master}"
 
 core_server_image="${docker_username}/${docker_reponame}:i2b2-core-server_${i2b2_core_server_branch}"
-if [ "$HAS_SECRETS" = "true" ]; then
-    oracle_image="${docker_username}/${docker_reponame}:i2b2-data-oracle_${i2b2_data_branch}"
-fi
+oracle_image="${docker_username}/${docker_reponame}:i2b2-data-oracle_${i2b2_data_branch}"
+
 echo "=========================================="
 echo " Setting up Docker images"
 echo " Core Server: $core_server_image"
@@ -29,7 +28,9 @@ echo "=========================================="
 
 #updating docker image tag
 sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
-sed -i "s|i2b2/i2b2-data-oracle:\${I2B2_DATA_ORACLE_TAG}|${oracle_image}|g" docker-compose.yml
+if [ "$HAS_SECRETS" = "true" ]; then
+    sed -i "s|i2b2/i2b2-data-oracle:\${I2B2_DATA_ORACLE_TAG}|${oracle_image}|g" docker-compose.yml
+fi
 
 echo "Starting containers..."
 docker compose up -d 
