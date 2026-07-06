@@ -27,9 +27,18 @@ echo " MSSQL Data : $mssql_image"
 echo "=========================================="
 
 #updating docker image tag
-sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
-if [ "$HAS_SECRETS" = "true" ]; then
+
+if [ "$ci_type" = "core-server" ]; then
+    sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
+    if [ "$has_secrets" = "true" ]; then
+        sed -i "s|i2b2/i2b2-data-mssql:\${I2B2_DATA_MSSQL_TAG}|${mssql_image}|g" docker-compose.yml
+    fi
+fi
+elif [ "$ci_type" = "data" ]; then
     sed -i "s|i2b2/i2b2-data-mssql:\${I2B2_DATA_MSSQL_TAG}|${mssql_image}|g" docker-compose.yml
+    if [ "$has_secrets" = "true" ]; then
+        sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
+    fi
 fi
 
 echo "Starting containers..."
