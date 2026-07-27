@@ -76,8 +76,8 @@ services:
     image: i2b2/i2b2-data-pgsql:${I2B2_DATA_PGSQL_TAG} 
     container_name: i2b2-data-pgsql
     restart: unless-stopped
-    environment:
-      - POSTGRES_PASSWORD=${I2B2_PG_PASS}
+    # environment:
+      # - POSTGRES_PASSWORD=${I2B2_PG_PASS}
     # ports:
     #   - 5432:5432
     networks:
