@@ -14,12 +14,12 @@ echo "CI_TYPE"
 
 if [ "$CI_TYPE" = "core-server" ]; then
     sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
-    if [ "$has_secrets" = "true" ]; then
+    if [ "$HAS_SECRETS" = "true" ]; then
         sed -i "s|i2b2/i2b2-data-pgsql:\${I2B2_DATA_PGSQL_TAG}|$pgsql_image|g" docker-compose.yml
     fi
 elif [ "$CI_TYPE" = "data" ]; then
         sed -i "s|i2b2/i2b2-data-pgsql:\${I2B2_DATA_PGSQL_TAG}|$pgsql_image|g" docker-compose.yml
-    if [ "$has_secrets" = "true" ]; then
+    if [ "$HAS_SECRETS" = "true" ]; then
         sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
     fi
 fi
