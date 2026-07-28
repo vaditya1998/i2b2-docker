@@ -5,13 +5,6 @@ core_server_image=$docker_username/$docker_reponame:i2b2-core-server_$i2b2_core_
 pgsql_image=$docker_username/$docker_reponame:i2b2-data-pgsql_$i2b2_data_branch
 
 #updating docker image tag
-# sed -i "s|i2b2/i2b2-webclient:\${I2B2_WEBCLIENT_TAG}|$docker_username/$docker_reponame:i2b2-webclient_latest|g" docker-compose.yml
-
-# webclient_image=$(echo "$LOAD_OUTPUT" | sed -n 's/^Loaded image: //p')
-# echo "$webclient_image"
-echo $CI_TYPE
-echo "CI_TYPE"
-
 if [ "$CI_TYPE" = "core-server" ]; then
     sed -i "s|i2b2/i2b2-core-server:\${I2B2_CORE_SERVER_TAG}|${core_server_image}|g" docker-compose.yml
     if [ "$HAS_SECRETS" = "true" ]; then
