@@ -2,8 +2,8 @@ i2b2_webclient_image_tag="${1:-master}"
 i2b2_core_server_branch="${2:-master}"
 i2b2_data_branch="${3:-master}"
 
-core_server_image=$docker_username/$docker_reponame:i2b2-core-server_$i2b2_core_server_branch
-pgsql_image=$docker_username/$docker_reponame:i2b2-data-pgsql_$i2b2_data_branch
+core_server_image=$DOCKER_USERNAME/$DOCKER_REPOSITORY:i2b2-core-server_$i2b2_core_server_branch
+pgsql_image=$DOCKER_USERNAME/$DOCKER_REPOSITORY:i2b2-data-pgsql_$i2b2_data_branch
 
 
 if [ "$HAS_SECRETS" = "true" ]; then
